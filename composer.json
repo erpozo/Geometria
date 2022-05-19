@@ -8,6 +8,7 @@
         "psr-4": {
             "geometria\\":"src/"
         }
+
     },
     "autoload-dev": {
         "psr-4": {

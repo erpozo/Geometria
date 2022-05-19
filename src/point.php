@@ -2,11 +2,25 @@
 
 namespace geometria;
 
+/**
+ * Point representa un punto en un plano 2D
+ * @var int $coordX
+ * Coordenada eje X
+ * @var int $coordY
+ * Coordenada eje Y
+ */
 class point{
     private int $coordX;
     private int $coordY;
     private array $movement;
 
+    /**
+     * Crea un nuevo punto
+     * @param int $coordX
+     * Define el eje X
+     * @param int $coordY
+     * Define el eje Y
+     */
     private function __construct(int $coordX, int $coordY){
         $this->coordX = $coordX;
         $this->coordY = $coordY;
@@ -26,7 +40,19 @@ class point{
     }
 
     /**
-     * Devuelve la coordenada X del punto
+     * Devuelve la posición del punto
+     * @return array
+     * ["X"=>1,"Y"=>2]
+     */
+    public function getPosition():array{
+        return [
+            "X" => $this->getCoordX(),
+            "Y" => $this->getCoordY()
+        ];
+    }
+
+    /**
+     * Devuelve la posición del eje X
      * @return int
      */
     public function getCoordX():int{
@@ -34,20 +60,11 @@ class point{
     }
 
     /**
-     * Devuelve la coordenada Y del punto
+     * Devuelve la posición del eje Y
      * @return int
      */
     public function getCoordY():int{
         return $this->coordY;
-    }
-
-    /**
-     * Devuelve la posición del punto en un array indexado
-     * ["X"=>0,"Y"=>0]
-     * @return array
-     */
-    public function getPosition():array{
-        return ["X"=>$this->getCoordX(), "Y"=>$this->getCoordY()];
     }
 
     public function getMovement():array{
