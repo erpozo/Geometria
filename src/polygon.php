@@ -22,18 +22,18 @@ abstract class polygon{
      * @param array $points
      * @return void
      */
-    abstract static function create(array $points);
-    abstract public function validateNewPoint():bool;
+    //abstract static function create(array $points);
+    //abstract public function validateNewPoint():bool;
     abstract public function getMaxPoints():int;
 
     public function getNumPoints():int{
-        return count($this->$points);
+        return count($this->points);
     }
-
+/*
     protected function addPoint(point $point){
         if(!$this->validateNewPoint()){
             throw new \Exception("El punto no es valido");
         }
-        $this->$puntos[] = $p;
-    }
+        $this->puntos[] = $point;
+    }*/
 }
