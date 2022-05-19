@@ -5,13 +5,14 @@
         "phpunit/phpunit": "^9.5"
     },
     "autoload": {
-        "files": [
-            "src/*.php"
-        ]
+        "psr-4": {
+            "geometria\\":"src/"
+        }
+
     },
     "autoload-dev": {
-        "files": [
-            "src/*.php"
-        ]
+        "psr-4": {
+            "geometria\\":"src/"
+        }
     }
 }
