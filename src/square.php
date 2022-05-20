@@ -3,6 +3,8 @@
 namespace geometria;
 use geometria\polygon;
 
+include("vendor/autoload.php");
+
 class square extends polygon{
     private const MAXPOINTS = 4;
 
@@ -10,14 +12,14 @@ class square extends polygon{
      * new cuadrado([p1,p2,p3,p4])
      * los puntos deben venir dados Izq Arriba, Der Arriba, Der abajo Izq abajo
      */
-    public function __construct(array $points){
+    private function __construct(array $points){
         foreach($points as $point){
             $this->addPoint($point);
         }
     }
 
-    public function create(array $points):square{
-        if(count($points) == 2)self::createWith2Points($points);
+    public static function create(array $points):square{
+        if(count($points) == 2) return self::createWith2Points($points);
         if(!self::validate($points)){
             throw new \Exception("El cuadrado no es correcto");
         }
@@ -35,18 +37,18 @@ class square extends polygon{
         }
         [$point1, $point2] = $points;
         if($point1->getCoordY() == $point2->getCoordY() && $point1->getCoordX() < $point2->getCoordX()){
-            $points = self::calcCreateWith2PointsY($point1,$point2);
+            [$point3, $point4] = self::calcCreateWith2PointsY($point1,$point2);
         }
         if($point1->getCoordX() == $point2->getCoordX() && $point1->getCoordY() < $point2->getCoordY()){
-            $points = self::calcCreateWith2PointsX($point1,$point2);
+            [$point3, $point4] = self::calcCreateWith2PointsX($point1,$point2);
         }
         if($point1->getCoordY() == $point2->getCoordY() && $point1->getCoordX() > $point2->getCoordX()){
-            $points = self::calcCreateWith2PointsY($point2, $point1);
+            [$point3, $point4] = self::calcCreateWith2PointsY($point2, $point1);
         }
         if($point1->getCoordX() == $point2->getCoordX() && $point1->getCoordY() > $point2->getCoordY()){
-            $points = self::calcCreateWith2PointsX($point2, $point1);
+            [$point3, $point4] = self::calcCreateWith2PointsX($point2, $point1);
         }
-        return new square($points);
+        return new square([$point1,$point2,$point3,$point4]);
     }
 
     private static function calcCreateWith2PointsY(point $point1, point $point2):array{
@@ -79,10 +81,11 @@ class square extends polygon{
         $this->points[] = $point;
     }
 
-    public function getAllCoords(){
+    public function getAllCoords():array{
         foreach($this->points as $n => $point){
             $posiciones[$n] = $point->getPosition();
         }
+        return $posiciones;
     }
 
     public function getArea():float{
@@ -112,6 +115,9 @@ class square extends polygon{
 $point1 = point::createPoint(2,4);
 $point2 = point::createPoint(4,4);
 
-$micuadrado = new square([$point1,$point2]);
+$micuadrado = square::create([$point1,$point2]);
+
+$point3 = point::createPoint(4,6);
+$point4 = point::createPoint(2,6);
 
 print_r($micuadrado->getAllCoords());
