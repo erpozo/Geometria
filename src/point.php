@@ -35,7 +35,7 @@ class point{
      * Define el eje Y
      * @return point
      */
-    public static function createPoint(int $coordX, int $coordY){
+    public static function createPoint(int $coordX, int $coordY):point{
         return new point($coordX, $coordY);
     }
 
@@ -67,30 +67,69 @@ class point{
         return $this->coordY;
     }
 
+    /**
+     * Obtiene el registro de movimiento del punto 
+     * @return array
+     */
     public function getMovement():array{
         return $this->movement;
     }
 
+    /**
+     * Mueve el punto a las coordenadas dadas
+     * @param integer $X
+     * @param integer $Y
+     * @return void
+     */
     public function moveTo(int $X=0, int $Y=0){
         $this->coordX = $X;
         $this->coordY = $Y;
         $this->registerMovement();
     }
 
+    /**
+     * Desplaza el punto en la cantidad indicada
+     *
+     * @param integer $X
+     * Coordenada el eje X
+     * @param integer $Y
+     * Coordenada el eje Y 
+     * @return void
+     */
     public function move(int $X=0, int $Y=0){
         $this->coordX += $X;
         $this->coordY += $Y;
         $this->registerMovement();
     }
 
+    /**
+     * Desplaza el punto en la cantidad indicada
+     *
+     * @param integer $X
+     * Coordenada el eje X
+     * @param integer $Y
+     * Coordenada el eje Y 
+     * @return void
+     */
     public function moveToPoint(point $point){
         $this->moveTo($point->getCoordX(),$point->getCoordY());
     }
 
+    /**
+     * Registra el movimiento del punto
+     * @return void
+     */
     private function registerMovement(){
         $this->movement[] = $this->getPosition();
     }
 
+    /**
+     * Mide la distancia entre dos puntos
+     *
+     * @param point $point
+     * Punto al que medir la distancia
+     * @return float
+     */
     public function getDistance(point $point):float{
         [$px,$py] = $point->getPosition();
         $x = $this->getCoordX() - $px;
@@ -98,28 +137,100 @@ class point{
         return sqrt($x**2 + $y**2);
     }
 
-    public function isUpper(point $point){
+    /**
+     * Comprueba si el punto dado esta encima del pasado por parametros
+     * @param point $point
+     * @return boolean
+     */
+    public function isUpper(point $point):bool{
         return $this->getCoordY() > $point->getCoordY();
     }
-    public function isBottom(point $point){
+    /**
+     * Comprueba si el punto dado esta debajo del pasado por parametros
+     * @param point $point
+     * @return boolean
+     */
+    public function isBottom(point $point):bool{
         return $this->getCoordY() < $point->getCoordY();
     }
-    public function isLeft(point $point){
+    /**
+     * Comprueba si el punto dado esta a la izquierda del pasado por parametros
+     * @param point $point
+     * @return boolean
+     */
+    public function isLeft(point $point):bool{
         return $this->getCoordX() < $point->getCoordX();
     }
-    public function isRight(point $point){
+    /**
+     * Comprueba si el punto dado esta a la derecha del pasado por parametros
+     * @param point $point
+     * @return boolean
+     */
+    public function isRight(point $point):bool{
         return $this->getCoordX() > $point->getCoordX();
     }
-    public function isUpperLeft(point $point){
+    /**
+     * Comprueba si el punto dado esta encima a la izquierda del pasado por parametros
+     * @param point $point
+     * @return boolean
+     */
+    public function isUpperLeft(point $point):bool{
         return $this->isLeft($point) && $this->isUpper($point);
     }
-    public function isUpperRight(point $point){
+    /**
+     * Comprueba si el punto dado esta encima a la derecha del pasado por parametros
+     * @param point $point
+     * @return boolean
+     */
+    public function isUpperRight(point $point):bool{
         return $this->isRight($point) && $this->isUpper($point);
     }
-    public function isBottomLeft(point $point){
+    /**
+     * Comprueba si el punto dado esta deajo a la izquierda del pasado por parametros
+     * @param point $point
+     * @return boolean
+     */
+    public function isBottomLeft(point $point):bool{
         return $this->isLeft($point) && $this->isBottom($point);
     }
-    public function isBottomRight(point $point){
+    /**
+     * Comprueba si el punto dado esta deajo a la derecha del pasado por parametros
+     * @param point $point
+     * @return boolean
+     */
+    public function isBottomRight(point $point):bool{
         return $this->isRight($point) && $this->isBottom($point);
+    }
+    /**
+     * Comprueba si el punto dado esta verticalmente encima del pasado por parametros
+     * @param point $point
+     * @return boolean
+     */
+    public function isJustUpper(point $point):bool{
+        return $this->isUpper($point) && !$this->isLeft($point) && !$this->isRight($point);
+    }
+    /**
+     * Comprueba si el punto dado esta verticalmente debajo del pasado por parametros
+     * @param point $point
+     * @return boolean
+     */
+    public function isJustBottom(point $point):bool{
+        return $this->isBottom($point) && !$this->isLeft($point) && !$this->isRight($point);
+    }
+    /**
+     * Comprueba si el punto dado esta horizontalmente a la izquierda del pasado por parametros
+     * @param point $point
+     * @return boolean
+     */
+    public function isJustLeft(point $point):bool{
+        return $this->isLeft($point) && !$this->isUpper($point) && !$this->isBottom($point);
+    }
+    /**
+     * Comprueba si el punto dado esta horizontalmente a la derecha del pasado por parametros
+     * @param point $point
+     * @return boolean
+     */
+    public function isJustRight(point $point):bool{
+        return $this->isRight($point) && !$this->isUpper($point) && !$this->isBottom($point);
     }
 } 
