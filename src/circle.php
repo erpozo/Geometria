@@ -3,9 +3,8 @@
 namespace geometria;
 use geometria\point;
 
-class circle extends point{
+class circle extends polygon{
     private point $centerPoint;
-    private point $radiusPoint;
     private int $radius;
 
     /**
@@ -20,17 +19,35 @@ class circle extends point{
         $this->radius = $radius;
     }
 
-    
-    public static function createCircle(point $point1, int $size){
+    /**
+     * Crea un objeto circle
+     * @param point $centerPoint
+     * Punto central del circulo
+     * @param int $radius
+     * Radio del circulo
+     */
+    public static function createCircle(point $point1, int $radius):circle{
         return new circle($point1,$size);
     }
 
-    public static function createCircleAndPoint(int $coordX, int $coordY, int $size){
-        $point = point::createPoint($coordX, $coordY);
-        return self::createCircle($point, $size);
+    /**
+     * Crea un objeto punto para usarlo en circle
+     * @param int $coordX
+     * Coord eje X
+     * @param int $coordY
+     * Coord eje Y
+     * @param int $radius
+     * Radio del circulo
+     */
+    public static function createCircleAndPoint(int $coordX, int $coordY, int $radius):circle{
+        return self::createCircle(point::createPoint($coordX, $coordY), $radius);
     }
 
-    public function calcArea(){
+    /**
+     * Calcula el area del circulo
+     * @return float 
+     */
+    public function calcArea():float{
         return pi() * $this->radius * $this->radius;
     }
 }

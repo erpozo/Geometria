@@ -18,6 +18,12 @@ class square extends polygon{
         }
     }
 
+    /**
+     * Crea un objeto square
+     * @param array $points
+     * Vertices del cuadrado
+     * @return square
+     */
     public static function create(array $points):square{
         if(count($points) == 2) return self::createWith2Points($points);
         if(!self::validate($points)){
@@ -52,24 +58,24 @@ class square extends polygon{
     }
 
     private static function calcCreateWith2PointsY(point $point1, point $point2):array{
-        $side = $point1->getCoordX() - $point2->getCoordX();
+        $side = $point1->getDistance($point2);
         $point3 = point::createPoint(0,0);
-        $point3->moveToPoint($point2);
+        $point3->moveToPoint($point1);
         $point3->move(0, $side);
         $point4 = point::createPoint(0, 0);
-        $point4->moveToPoint($point3);
-        $point4->move(-$side, 0);
+        $point4->moveToPoint($point2);
+        $point4->move(0, $side);
         return [$point1,$point2,$point3,$point4];
     }
 
     private static function calcCreateWith2PointsX(point $point1, point $point2):array{
-        $side = $point1->getCoordX() - $point2->getCoordX();
+        $side = $point1->getDistance($point2);
         $point3 = point::createPoint(0,0);
-        $point3->moveToPoint($point2);
+        $point3->moveToPoint($point1);
         $point3->move($side, 0);
         $point4 = point::createPoint(0, 0);
-        $point4->moveToPoint($point3);
-        $point4->move(0, -$side);
+        $point4->moveToPoint($point2);
+        $point4->move($side, 0);
         return [$point1,$point2,$point3,$point4];
     }
 

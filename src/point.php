@@ -131,9 +131,8 @@ class point{
      * @return float
      */
     public function getDistance(point $point):float{
-        [$px,$py] = $point->getPosition();
-        $x = $this->getCoordX() - $px;
-        $y = $this->getCoordY() - $py;
+        $x = $this->getCoordX() - $point->getCoordX();
+        $y = $this->getCoordY() - $point->getCoordY();;
         return sqrt($x**2 + $y**2);
     }
 
